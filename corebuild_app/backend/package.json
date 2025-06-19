@@ -1,0 +1,11 @@
+{
+  "name": "backend_corebuild",
+  "module": "server.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
