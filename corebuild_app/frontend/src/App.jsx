@@ -1,12 +1,10 @@
 // Import Modules
 import { Routes, Route } from "react-router";
 
-
 // Import Components
 import Navbar from "./components/Navbar.jsx";
 import Auth_btn from "./components/Auth_btn.jsx";
 import Footer from "./components/Footer.jsx";
-
 
 // Import Routes
 import Register from "./Routes/Auth/Register.jsx";
