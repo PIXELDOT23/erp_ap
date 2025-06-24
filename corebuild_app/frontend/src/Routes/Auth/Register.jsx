@@ -52,8 +52,8 @@ const Register = () => {
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.3 }}
-                                              className="grid" htmlFor="phone">
-                                    <span className="mx-2">Phone</span>
+                                              className="grid" htmlFor="email">
+                                    <span className="mx-2">Email</span>
                                     <input type="email"
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
                                            placeholder="Enter Your Phone" aria-required="true"/>
