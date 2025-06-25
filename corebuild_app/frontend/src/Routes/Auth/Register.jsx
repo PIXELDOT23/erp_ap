@@ -106,8 +106,8 @@ const Register = () => {
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.3 }}
-                                              className="grid" htmlFor="Email">
-                                    <span className="mx-2">Email</span>
+                                              className="grid" htmlFor="phone">
+                                    <span className="mx-2">Phone</span>
                                     <input type="email"
                                            value={formData.email}
                                            onChange={(ev) => { setFormData({ ...formData, user_email: ev.target.value }) }}
