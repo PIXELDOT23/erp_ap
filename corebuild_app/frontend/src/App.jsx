@@ -1,5 +1,6 @@
 // Import Modules
-import { Routes, Route } from "react-router";
+import { Toaster } from "react-hot-toast";
+import { Routes, Route } from "react-router-dom";
 
 // Import Components
 import Navbar from "./components/Navbar.jsx";
@@ -16,7 +17,7 @@ function App() {
 
   return (
     <>
-        <section className="h-dvh tracking-widest">
+        <section className="tracking-widest">
            <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -25,6 +26,7 @@ function App() {
             </Routes>
             <Footer />
         </section>
+        <Toaster position="bottom-right" />
     </>
   )
 }

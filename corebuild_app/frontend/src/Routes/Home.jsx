@@ -1,5 +1,5 @@
 // Import Modules
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 
 // Import Components
 import Auth_btn from "../components/Auth_btn.jsx";
@@ -10,7 +10,7 @@ import Login from "./Auth/Login.jsx";
 
 const Home = () => {
     return (
-        <div>
+        <div className="h-dvh">
             <Auth_btn />
             <Routes>
                 <Route path="/auth/register" element={<Register />} />

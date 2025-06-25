@@ -3,17 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-4||-9223372036854775808|c|G
-4||10|c|G
-4||10|C|G
-4||10|T|G</Grants>
-      <IntrospectionStateNumber>749</IntrospectionStateNumber>
+      <IntrospectionStateNumber>841</IntrospectionStateNumber>
       <ServerVersion>17.5</ServerVersion>
-      <StartupTime>1750665545</StartupTime>
+      <StartupTime>1750740659</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -809,7 +801,7 @@ false Zulu
 14751||10|C|G
 14751||-9223372036854775808|U|G
 14751||10|U|G</Grants>
-      <IntrospectionStateNumber>749</IntrospectionStateNumber>
+      <IntrospectionStateNumber>841</IntrospectionStateNumber>
       <ObjectId>16387</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4236,8 +4228,8 @@ false Zulu
     <schema id="265" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>749</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-06-23.09:24:17</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>841</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-06-24.16:41:54</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4250,13 +4242,27 @@ false Zulu
       <StoredType>integer|0s</StoredType>
       <OwnerName>postgres</OwnerName>
     </sequence>
-    <table id="267" parent="265" name="details">
+    <sequence id="267" parent="265" name="user_profile_user_id_seq">
+      <ObjectId>24642</ObjectId>
+      <SequenceIdentity>1</SequenceIdentity>
+      <StartValue>1</StartValue>
+      <StateNumber>795</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <OwnerName>postgres</OwnerName>
+    </sequence>
+    <table id="268" parent="265" name="details">
       <ObjectId>16389</ObjectId>
       <StateNumber>744</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>postgres</OwnerName>
     </table>
-    <column id="268" parent="267" name="person_id">
+    <table id="269" parent="265" name="user_profile">
+      <ObjectId>24643</ObjectId>
+      <StateNumber>840</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <column id="270" parent="268" name="person_id">
       <DefaultExpression>nextval(&apos;details_person_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4265,21 +4271,21 @@ false Zulu
       <SequenceId>16388</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="269" parent="267" name="person_name">
+    <column id="271" parent="268" name="person_name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>744</StateNumber>
       <StoredType>varchar(50)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="270" parent="267" name="phone">
+    <column id="272" parent="268" name="phone">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>744</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <index id="271" parent="267" name="details_pkey">
+    <index id="273" parent="268" name="details_pkey">
       <ColNames>person_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16393</ObjectId>
@@ -4288,12 +4294,131 @@ false Zulu
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="272" parent="267" name="details_pkey">
+    <key id="274" parent="268" name="details_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16394</ObjectId>
       <Primary>1</Primary>
       <StateNumber>744</StateNumber>
       <UnderlyingIndexId>16393</UnderlyingIndexId>
+    </key>
+    <check id="275" parent="269" name="user_profile_phone_check">
+      <ColNames>phone</ColNames>
+      <ObjectId>24650</ObjectId>
+      <Predicate>phone ~ &apos;^\+?[0-9]{10,15}$&apos;::text</Predicate>
+      <StateNumber>795</StateNumber>
+    </check>
+    <check id="276" parent="269" name="user_profile_user_email_check">
+      <ColNames>user_email</ColNames>
+      <ObjectId>24649</ObjectId>
+      <Predicate>user_email ~* &apos;^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$&apos;::text</Predicate>
+      <StateNumber>795</StateNumber>
+    </check>
+    <column id="277" parent="269" name="user_id">
+      <DefaultExpression>nextval(&apos;user_profile_user_id_seq&apos;::regclass)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <SequenceId>24642</SequenceId>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="278" parent="269" name="full_name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>varchar(50)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="279" parent="269" name="user_email">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="280" parent="269" name="phone">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="281" parent="269" name="user_password">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>bytea|0s</StoredType>
+      <TypeId>17</TypeId>
+    </column>
+    <column id="282" parent="269" name="user_designation">
+      <Position>6</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>varchar(50)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="283" parent="269" name="created_at">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <Position>7</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="284" parent="269" name="updated_at">
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <Position>8</Position>
+      <StateNumber>795</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <index id="285" parent="269" name="user_profile_pkey">
+      <ColNames>user_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24653</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>840</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="286" parent="269" name="user_profile_user_email_key">
+      <ColNames>user_email</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24655</ObjectId>
+      <StateNumber>840</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <index id="287" parent="269" name="user_profile_phone_key">
+      <ColNames>phone</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24657</ObjectId>
+      <StateNumber>840</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="288" parent="269" name="user_profile_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24654</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>795</StateNumber>
+      <UnderlyingIndexId>24653</UnderlyingIndexId>
+    </key>
+    <key id="289" parent="269" name="user_profile_user_email_key">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24656</ObjectId>
+      <StateNumber>795</StateNumber>
+      <UnderlyingIndexId>24655</UnderlyingIndexId>
+    </key>
+    <key id="290" parent="269" name="user_profile_phone_key">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>24658</ObjectId>
+      <StateNumber>795</StateNumber>
+      <UnderlyingIndexId>24657</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

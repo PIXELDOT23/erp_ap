@@ -6,8 +6,8 @@ import morgan from 'morgan';
 import express from 'express';
 import bodyParser from 'body-parser';
 
-// DB Connection
-import pool from './config/db_config.js'
+// Import Routes
+import UserRoutes from './routes/user.route.js';
 
 // Env Config
 dotenv.config();
@@ -17,13 +17,19 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 // | Middleware
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    methods: [ 'GET', 'POST', 'PUT', 'DELETE' ],
+}));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 
+// API Routs
 
+// User Route
+app.use('/api/auth', UserRoutes);
 
 // Server Runs
 app.listen(port, () => {

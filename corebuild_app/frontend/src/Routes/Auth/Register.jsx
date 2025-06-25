@@ -1,13 +1,62 @@
 //Import Modules
-import { Link } from "react-router";
+import { useState } from "react";
 import { motion } from "motion/react";
+import { Link, useNavigate } from "react-router-dom";
+
+// Import Hooks
+import { useUser } from "../../Hooks/useUser.js";
+
+// Import Components
+import Loader from "../../components/Loader.jsx";
+import Loading_Screen from "../../components/Loading_Screen.jsx";
 
 // Import Assets
 import RegisterImg from '../../assets/img/register.svg'
 
 const Register = () => {
+
+    // Property and States
+    const { register, loading } = useUser();
+    const [ Redirecting, setRedirecting ] = useState(false);
+
+    const navigate = useNavigate();
+
+    // State for Getting Input values
+    const [ formData, setFormData ] = useState({
+        user_name: "",
+        user_email: "",
+        user_phone: "",
+        user_password: "",
+        confirm_password: "",
+        user_designation: "",
+    });
+
+    // Handle Register
+    const handleChange = (ev) => {
+
+        ev.preventDefault();
+
+        const register_success = register(formData);
+
+        if (register_success) {
+
+            setRedirecting(true);
+
+            setTimeout(() => {
+
+                navigate("/auth/login");
+
+            }, 2000);
+
+        }
+    };
+
+    if (Redirecting) {
+        return <Loading_Screen />
+    }
+
     return (
-        <div className="h-screen">
+        <div className="h-full">
             <section className="px-10 py-4">
                 <div>
                     <motion.p className="head text-5xl"
@@ -29,7 +78,7 @@ const Register = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                     <div className="my-6">
-                        <form className="grid grid-cols-2 gap-22 text-[#202020]">
+                        <form onSubmit={handleChange} className="grid grid-cols-2 gap-22 text-[#202020]">
                             <div className="grid gap-10">
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
@@ -37,8 +86,11 @@ const Register = () => {
                                               className="grid" htmlFor="name">
                                     <span className="mx-2">Full Name</span>
                                     <input type="text"
+                                           value={formData.user_name}
+                                           onChange={(ev) => { setFormData({ ...formData, user_name: ev.target.value }) }}
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
-                                           placeholder="Enter Your Name" aria-required="true"/>
+                                           placeholder="Enter Your Name"
+                                           aria-required="true"/>
                                 </motion.label>
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
@@ -46,17 +98,21 @@ const Register = () => {
                                               className="grid" htmlFor="phone">
                                     <span className="mx-2">Phone</span>
                                     <input type="tel"
+                                           value={formData.phone}
+                                           onChange={(ev) => { setFormData({ ...formData, user_phone: ev.target.value }) }}
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
                                            placeholder="Enter Your Phone" aria-required="true"/>
                                 </motion.label>
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.3 }}
-                                              className="grid" htmlFor="phone">
-                                    <span className="mx-2">Phone</span>
+                                              className="grid" htmlFor="Email">
+                                    <span className="mx-2">Email</span>
                                     <input type="email"
+                                           value={formData.email}
+                                           onChange={(ev) => { setFormData({ ...formData, user_email: ev.target.value }) }}
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
-                                           placeholder="Enter Your Phone" aria-required="true"/>
+                                           placeholder="Enter Your Email" aria-required="true"/>
                                 </motion.label>
                             </div>
                             <div className="grid gap-10">
@@ -66,6 +122,8 @@ const Register = () => {
                                               className="grid" htmlFor="password">
                                     <span className="mx-2">Password</span>
                                     <input type="password"
+                                           value={formData.password}
+                                           onChange={(ev) => { setFormData({ ...formData, user_password: ev.target.value }) }}
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
                                            placeholder="Enter Your Name"/>
                                 </motion.label>
@@ -75,8 +133,10 @@ const Register = () => {
                                               className="grid" htmlFor="confirm password">
                                     <span className="mx-2">Password</span>
                                     <input type="password"
+                                           value={formData.confirm_password}
+                                           onChange={(ev) => { setFormData({ ...formData, confirm_password: ev.target.value } ) }}
                                            className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
-                                           placeholder="Enter Your Name"/>
+                                           placeholder="Enter Your Confirm Password" aria-required="true"/>
                                 </motion.label>
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
@@ -84,6 +144,8 @@ const Register = () => {
                                               className="grid" htmlFor="designation">
                                     <span className="mx-2">Designation</span>
                                     <select name="designation"
+                                            value={formData.user_designation}
+                                            onChange={(ev) => { setFormData({ ...formData, user_designation: ev.target.value }) }}
                                             className="outline outline-[#BABABA] focus:outline-2 focus:outline-[#005bea] rounded p-4"
                                             id="role" placeholder="Select Your Designation">
                                         <option value="">
@@ -97,12 +159,24 @@ const Register = () => {
                                 </motion.label>
                             </div>
                             <div className="grid gap-6">
-                                <motion.input initial={{ opacity:0, y: 100 }}
+                                <motion.button initial={{ opacity:0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.1 }}
                                               type="submit"
-                                       className="text-[#005bea] border border-[#6392E5] bg-[#D9E1EF] hover:bg-[#C9D8F3] rounded p-4"
-                                       value="Create Account" />
+                                               disabled={loading}
+                                              className="text-[#005bea] border border-[#6392E5] bg-[#D9E1EF] hover:bg-[#C9D8F3] rounded p-4">
+
+                                    { loading ? (
+
+                                            <Loader />
+
+                                    ) : (
+                                        <span>
+                                            Create Account
+                                        </span>
+                                    ) }
+
+                                </motion.button>
                                 <motion.p initial={{ opacity:0, y: 100 }}
                                           animate={{ opacity: 1, y: 0 }}
                                           transition={{ delay: 0.2 }}
@@ -116,7 +190,7 @@ const Register = () => {
                             <motion.hr initial={{ y: 100, z: 1000, opacity: 0 }}
                                        animate={{ y: 0, z: 0, opacity: 1 }}
                                        className="border-[#6392E5]" />
-                            <motion.p initial={{ opacity:0, y: 100 }}
+                            <motion.p initial={{ opacity: 0, y: 100 }}
                                       animate={{ opacity: 1, y: 0 }}
                                       transition={{ delay: 0.3 }}
                                       className="text-xl text-center">

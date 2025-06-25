@@ -1,5 +1,5 @@
 //Import Modules
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import { motion } from "motion/react";
 
 // Import Components
@@ -12,7 +12,7 @@ import LoginImg from '../../assets/img/Login.svg'
 const Login = () => {
     return (
         <>
-            <div className="h-screen">
+            <div className="h-full">
                 <section className="px-10 py-4">
                     <div>
                         <motion.p initial={{ opacity: 0, y: 100 }}

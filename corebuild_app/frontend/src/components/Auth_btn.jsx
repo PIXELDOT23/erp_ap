@@ -1,5 +1,5 @@
 // Import Modules
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { motion } from "motion/react"
 
 
@@ -7,7 +7,7 @@ const Auth_Btn = () => {
     return (
         <div>
             {/*Auth Btn*/}
-            <div className="h-dvh flex flex-col justify-center items-center">
+            <div className="h-screen flex flex-col justify-center items-center">
                 <motion.p initial={{ opacity: 0, y: 100 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="head text-6xl">
                     Innovate Your Environment
                 </motion.p>

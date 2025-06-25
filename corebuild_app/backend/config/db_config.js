@@ -12,12 +12,6 @@ const pool = new Pool({
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-}).connect((err) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Connected to DB");
-    }
 })
 
 export default pool;
