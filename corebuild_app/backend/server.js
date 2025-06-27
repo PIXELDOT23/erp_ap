@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import helmet from "helmet";
 import morgan from 'morgan';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
 // Import Routes
@@ -19,11 +20,13 @@ const port = process.env.PORT || 4000;
 // | Middleware
 app.use(cors({
     origin: process.env.CLIENT_URL,
+    credentials: true,
     methods: [ 'GET', 'POST', 'PUT', 'DELETE' ],
 }));
 app.use(helmet());
-app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 
 // API Routs

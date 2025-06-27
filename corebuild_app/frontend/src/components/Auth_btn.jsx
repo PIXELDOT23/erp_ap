@@ -8,7 +8,10 @@ const Auth_Btn = () => {
         <div>
             {/*Auth Btn*/}
             <div className="h-screen flex flex-col justify-center items-center">
-                <motion.p initial={{ opacity: 0, y: 100 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="head text-6xl">
+                <motion.p initial={{ opacity: 0, y: 100 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className="head text-2xl md:text-6xl lg:text-6xl">
                     Innovate Your Environment
                 </motion.p>
 

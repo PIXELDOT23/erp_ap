@@ -1,6 +1,8 @@
 //Import Modules
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { motion } from "motion/react";
+import { UserPlus } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 
 // Import Hooks
@@ -17,6 +19,7 @@ const Register = () => {
 
     // Property and States
     const { register, loading } = useUser();
+
     const [ Redirecting, setRedirecting ] = useState(false);
 
     const navigate = useNavigate();
@@ -32,23 +35,42 @@ const Register = () => {
     });
 
     // Handle Register
-    const handleChange = (ev) => {
+    const handleChange = async (ev) => {
 
         ev.preventDefault();
 
-        const register_success = register(formData);
+        // Checking the Password matches or not, then create a user
+        if (formData.user_password !== formData.confirm_password)
+        {
 
-        if (register_success) {
+            toast.error("Passwords don't match", {
+                style: {
+                    border: '1px solid #6392E5',
+                    color: '#005bea',
+                    background: '#f1f1f1',
+                }
+            });
 
-            setRedirecting(true);
 
-            setTimeout(() => {
+        } else {
 
-                navigate("/auth/login");
+            const register_success = await register(formData);
 
-            }, 2000);
+            if (register_success)
+            {
+
+                setRedirecting(true);
+
+                setTimeout(() => {
+
+                    navigate("/auth/login");
+
+                }, 2000);
+
+            }
 
         }
+
     };
 
     if (Redirecting) {
@@ -56,8 +78,8 @@ const Register = () => {
     }
 
     return (
-        <div className="h-full">
-            <section className="px-10 py-4">
+        <div>
+            <section className="h-full md:h-0 lg:h-0 xl:h-0 px-10 py-4">
                 <div>
                     <motion.p className="head text-5xl"
                               initial={{ opacity: 0, y: 100 }}
@@ -76,9 +98,9 @@ const Register = () => {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-4">
                     <div className="my-6">
-                        <form onSubmit={handleChange} className="grid grid-cols-2 gap-22 text-[#202020]">
+                        <form onSubmit={handleChange} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-22 text-[#202020]">
                             <div className="grid gap-10">
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
@@ -106,8 +128,8 @@ const Register = () => {
                                 <motion.label initial={{ opacity: 0, y: 100 }}
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.3 }}
-                                              className="grid" htmlFor="phone">
-                                    <span className="mx-2">Phone</span>
+                                              className="grid" htmlFor="Email">
+                                    <span className="mx-2">Email</span>
                                     <input type="email"
                                            value={formData.email}
                                            onChange={(ev) => { setFormData({ ...formData, user_email: ev.target.value }) }}
@@ -131,7 +153,7 @@ const Register = () => {
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.5 }}
                                               className="grid" htmlFor="confirm password">
-                                    <span className="mx-2">Password</span>
+                                    <span className="mx-2">Confirm Password</span>
                                     <input type="password"
                                            value={formData.confirm_password}
                                            onChange={(ev) => { setFormData({ ...formData, confirm_password: ev.target.value } ) }}
@@ -163,7 +185,7 @@ const Register = () => {
                                               animate={{ opacity: 1, y: 0 }}
                                               transition={{ delay: 0.1 }}
                                               type="submit"
-                                               disabled={loading}
+                                              disabled={loading}
                                               className="text-[#005bea] border border-[#6392E5] bg-[#D9E1EF] hover:bg-[#C9D8F3] rounded p-4">
 
                                     { loading ? (
@@ -171,7 +193,8 @@ const Register = () => {
                                             <Loader />
 
                                     ) : (
-                                        <span>
+                                        <span className="flex gap-2 justify-center items-center">
+                                            <UserPlus />
                                             Create Account
                                         </span>
                                     ) }
@@ -199,7 +222,8 @@ const Register = () => {
                         </div>
                     </div>
                     <div>
-                        <motion.img initial={{ opacity: 0, y: 100, rotateZ: 5 }}
+                        <motion.img className="hidden lg:block"
+                                    initial={{ opacity: 0, y: 100, rotateZ: 5 }}
                                     animate={{ opacity: 1, y: 0, rotateZ: 0}}
                                     src={RegisterImg} alt="Register-img"/>
                     </div>

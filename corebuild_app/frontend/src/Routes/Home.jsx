@@ -10,7 +10,7 @@ import Login from "./Auth/Login.jsx";
 
 const Home = () => {
     return (
-        <div className="h-dvh">
+        <div className="h-0 grid justify-center items-centre">
             <Auth_btn />
             <Routes>
                 <Route path="/auth/register" element={<Register />} />

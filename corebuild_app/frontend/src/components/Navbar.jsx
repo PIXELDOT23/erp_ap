@@ -13,9 +13,9 @@ const Navbar = () => {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: -100 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} >
-                    <Link className="text-[#005BEA] text-xl border border-[#6392E5] bg-[#D9E1EF] hover:bg-[#C9D8F3] p-2 rounded"
+                    <Link className="flex gap-2 text-[#005BEA] text-xl border border-[#6392E5] bg-[#D9E1EF] hover:bg-[#C9D8F3] p-2 rounded"
                           to={'/'}>
-                        <i className="bi bi-house mr-2"></i>
+                        <i className="bi bi-house"></i>
                         Home
                     </Link>
                 </motion.div>

@@ -1,4 +1,5 @@
 // Import Modules
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Import Hooks
@@ -7,16 +8,28 @@ import { useUser } from "../Hooks/useUser.js";
 // Import components
 import Loading_Screen from "./Loading_Screen.jsx";
 
-const ProtectedRoute = ({ children }) => {
+const PublicRoute = ({ children }) => {
 
-    const { user, checkingAuth } = useUser();
+    const { isLoggedIn, checkingAuth } = useUser();
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+
+        if (!checkingAuth && isLoggedIn) {
+
+            navigate('/app-area', { replace: true });
+
+            navigate(0);
+
+        }
+
+    }, [checkingAuth, isLoggedIn, navigate]);
+
     if (checkingAuth) return <Loading_Screen />
 
-    return user ? children : navigate('/app-area');
+    return !isLoggedIn ? children : null;
 
 };
 
-export default ProtectedRoute;
+export default PublicRoute;
